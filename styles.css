@@ -1,69 +1,116 @@
-/* ===== RESET & VARIABLES ===== */
+/* =====================================================
+   RESET GLOBAL
+===================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Exemplo de paleta customizada */
+
+/* =====================================================
+   VARIÁVEIS GLOBAIS (TEMA CLARO - PADRÃO)
+===================================================== */
 :root {
-    --primary: #09351d;      /* Vermelho coral */
-    --secondary: #5fe7de;    /* Turquesa */
-    --accent: #ffe66d;       /* Amarelo */
-    --dark: #2d3436;
-    --light: #f8f9fa;
+    /* Espaçamento */
+    --spacing: 2rem;
+
+    /* Cores principais */
+    --primary: #8d1487;
+    --secondary: #5fe7de;
+    --accent: #6366f1;
+
+    /* Tema claro */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f3f4f6;
+    --text-primary: #000000;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
 }
 
-/* ===== BASE STYLES ===== */
+
+/* =====================================================
+   TEMA ESCURO (APENAS SOBRESCREVE VARIÁVEIS)
+===================================================== */
+body.dark-mode {
+    /* Cores principais */
+    --primary: #970f0f;
+    --secondary: #0c7e02;
+    --accent: #6366f1;
+
+    /* Tema escuro */
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border: #374151;
+}
+
+
+/* =====================================================
+   BASE / BODY
+===================================================== */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
-    color: var(--dark);
-    background: var(--light);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ===== HEADER & NAVIGATION ===== */
+
+/* =====================================================
+   HEADER & NAVEGAÇÃO
+===================================================== */
 header {
-    background: var(--white);
+    background-color: var(--bg-secondary);
     padding: var(--spacing);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
 nav {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 nav ul {
     display: flex;
-    list-style: none;
     gap: 2rem;
+    list-style: none;
 }
 
 nav a {
     text-decoration: none;
-    color: var(--dark);
+    color: var(--text-primary);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
 nav a:hover {
     color: var(--primary);
 }
 
-/* ===== HERO SECTION ===== */
+
+/* =====================================================
+   HERO SECTION
+===================================================== */
 .hero {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: var(--white);
-    text-align: center;
-    padding: 4rem var(--spacing);
     min-height: 60vh;
+    padding: 4rem var(--spacing);
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+    color: white;
+    text-align: center;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,7 +121,10 @@ nav a:hover {
     margin-bottom: 1rem;
 }
 
-/* ===== SECTIONS ===== */
+
+/* =====================================================
+   SEÇÕES GERAIS
+===================================================== */
 section {
     max-width: 1200px;
     margin: 0 auto;
@@ -87,7 +137,10 @@ section h2 {
     color: var(--primary);
 }
 
-/* ===== PROJECTS GRID ===== */
+
+/* =====================================================
+   PROJECTS GRID
+===================================================== */
 .projects-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -95,91 +148,33 @@ section h2 {
 }
 
 .project-card {
-    background: var(--white);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
 }
 
-/* ===== FOOTER ===== */
-footer {
-    background: var(--dark);
-    color: var(--white);
-    text-align: center;
-    padding: 2rem var(--spacing);
-}
 
-/* ===== RESPONSIVE - TABLET ===== */
-@media (min-width: 768px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .hero h2 {
-        font-size: 3rem;
-    }
-}
-
-/* ===== RESPONSIVE - DESKTOP ===== */
-@media (min-width: 1024px) {
-    .projects-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* ===== TEMA CLARO (padrão) ===== */
-:root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f3f4f6;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --accent: #6366f1;
-    --border: #e5e7eb;
-}
-
-/* ===== TEMA ESCURO ===== */
-body.dark-mode {
-    --bg-primary: #1f2937;
-    --bg-secondary: #111827;
-    --text-primary: #f9fafb;
-    --text-secondary: #d1d5db;
-    --accent: #818cf8;
-    --border: #374151;
-}
-
-/* ===== APLICAR VARIÁVEIS ===== */
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-header {
-    background-color: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-}
-
-.project-card {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
-}
-
+/* =====================================================
+   BOTÃO DE TROCA DE TEMA
+===================================================== */
 .theme-toggle {
+    width: 50px;
+    height: 50px;
     background: var(--bg-secondary);
     border: 2px solid var(--border);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
     cursor: pointer;
-    font-size: 1.5em;
-    transition: all 0.3s ease;
+    font-size: 1.5rem;
     position: relative;
+    transition: transform 0.3s ease;
 }
 
 .theme-toggle:hover {
@@ -195,7 +190,7 @@ header {
     transition: opacity 0.3s ease;
 }
 
-/* Mostrar sol em modo claro, lua em modo escuro */
+/* Ícones visíveis conforme o tema */
 body:not(.dark-mode) .icon-dark {
     opacity: 0;
 }
@@ -204,6 +199,10 @@ body.dark-mode .icon-light {
     opacity: 0;
 }
 
+
+/* =====================================================
+   RELÓGIO
+===================================================== */
 .clock-container {
     display: flex;
     flex-direction: column;
@@ -213,9 +212,9 @@ body.dark-mode .icon-light {
 }
 
 .clock {
-    font-size: 3em;
-    font-weight: bold;
     font-family: 'Courier New', monospace;
+    font-size: 3rem;
+    font-weight: bold;
     background: var(--bg-secondary);
     padding: 1.5rem 3rem;
     border-radius: 15px;
@@ -224,8 +223,8 @@ body.dark-mode .icon-light {
 }
 
 .clock span {
-    display: inline-block;
     min-width: 0.6em;
+    display: inline-block;
     text-align: center;
 }
 
@@ -235,9 +234,9 @@ body.dark-mode .icon-light {
     border: none;
     padding: 0.5rem 1.5rem;
     border-radius: 25px;
-    cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .format-toggle:hover {
@@ -245,6 +244,10 @@ body.dark-mode .icon-light {
     box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
 }
 
+
+/* =====================================================
+   CONTADOR DE VISITAS
+===================================================== */
 .visit-counter {
     background: var(--bg-secondary);
     padding: 2rem;
@@ -254,19 +257,14 @@ body.dark-mode .icon-light {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.visit-counter p {
-    margin: 0.5rem 0;
-    font-size: 1.1em;
-}
-
 .visit-counter strong {
     color: var(--accent);
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 
 .last-visit {
     color: var(--text-secondary);
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .reset-btn {
@@ -276,12 +274,44 @@ body.dark-mode .icon-light {
     border: none;
     padding: 0.5rem 1.5rem;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .reset-btn:hover {
     background: #dc2626;
     transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    text-align: center;
+    padding: 2rem var(--spacing);
+    border-top: 1px solid var(--border);
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+@media (min-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
