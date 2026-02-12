@@ -16,8 +16,8 @@
     --spacing: 2rem;
 
     /* Cores principais */
-    --primary: #8d1487;
-    --secondary: #5fe7de;
+    --primary: #970f0f; 
+    --secondary: #7e7602; 
     --accent: #6366f1;
 
     /* Tema claro */
@@ -34,8 +34,8 @@
 ===================================================== */
 body.dark-mode {
     /* Cores principais */
-    --primary: #970f0f;
-    --secondary: #0c7e02;
+    --primary: #8d1487;
+    --secondary: #5fe7de;
     --accent: #6366f1;
 
     /* Tema escuro */
