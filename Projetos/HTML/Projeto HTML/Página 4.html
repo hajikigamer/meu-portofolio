@@ -1,0 +1,213 @@
+<html>
+<head>
+	<meta charset ="UTF-8">
+	<title>Divisão de territorios de Portugal</title>
+	<style>
+		/* Estilo geral do menu */
+		ul.menu {
+		  list-style-type: none; /*Define o estilo da lista*/        
+		  margin: 0; /*Define a margem do menu*/
+		  padding: min( 0.4rem, 8%); /*Padding define uma a distância entre o conteúdo de um elemento e suas bordas*/
+		  border-radius: 5px; /*Arredonda os cantos*/
+		  background-color: #333; /*Define a cor do menu*/
+		  display: flex; /* Flexbox para centralizar */
+		  justify-content: center; /* Centraliza os itens */
+		}
+
+		/* Itens do menu */
+		ul.menu li {
+		  margin-right: 5px; /* Espaço entre os botões */
+		  margin-left: 5px; /* Espaço entre os botões */
+		  margin-bottom: 5px; /* Espaço entre os botões */
+		  margin-top: 5px; /* Espaço entre os botões */
+		}
+
+		/* Links do menu */
+		ul.menu li a {
+		  display: block; /*A display property é utilizada para especificar a forma como um elemento é apresentado numa página Web*/
+		  color: white; /*Cor das letras do menu*/
+		  text-align: center; /*Alinhamento das letras do menu*/
+		  padding: 14px 10px; /*Distancia entre as letras e a borda dos botões*/
+		  text-decoration: none; /*Decoração do texto*/
+		  border: 1px solid gray; /* Linha cinza */
+		  border-radius: 5px; /* Cantos arredondados */
+		}
+
+		/* Passar o cursor */
+		ul.menu li a:hover {
+		  background-color: #111; /*Define a cor de quando se passa por cima do botão*/
+		}
+		* {
+	  box-sizing: border-box; /*Define como a altura do elemento é calculado*/
+	}
+
+	body {
+	  font-family: Verdana, Arial, Helvetica, sans-serif; /*Define a letra*/
+	}
+
+	/* Estilo do header */
+	header {
+	  background-color: #666; /*Cor do header*/
+	  padding: 30px; /*Padding define uma a distância entre o conteúdo de um elemento e suas bordas*/
+	  text-align: center; /*Alinhameto do texto*/
+	  font-size: 35px; /*Tamanho da letra*/
+	  color: white; /*Cor da letra*/
+	}
+
+	/* Criar duas colunas/caixas que flutuam uma ao lado da outra */
+	nav {
+	  float: left; /*Float coloca um elemento no lado esquerdo ou direito do seu contentor*/
+	  width: 30%; /*Width define a largura de um elemento por defeito, define a largura da área de conteúdo*/
+	  height: 800px; /*Define a altura*/
+	  background: #ccc; /*Define a cor*/
+	  padding: 20px; /*Padding define uma a distância entre o conteúdo de um elemento e suas bordas*/
+	}
+
+	/* Estilizar a lista dentro do menu */
+	nav ul {
+	  list-style-type: none; /*list-style-type define o marcador (como um disco, carácter ou estilo de contador personalizado) de um elemento de item de lista*/
+	  padding: 0; /*Padding define uma a distância entre o conteúdo de um elemento e suas bordas*/
+	}
+	
+	/*Estilo do artigo*/
+	article {
+	  float: left; /*Float coloca um elemento no lado esquerdo ou direito do seu contentor*/
+	  padding: 20px; /*Padding define uma a distância entre o conteúdo de um elemento e suas bordas*/
+	  width: 70%; /*Width define a largura de um elemento por defeito, define a largura da área de conteúdo*/
+	  background-color: #f1f1f1; /*Define a cor*/
+	  height: 800px; /*Define a altura*/
+	}
+
+	/* Limpar os floats após as colunas */
+	section::after {
+	  content: ""; /*conteúdo substitui o conteúdo por um valor gerado. Pode ser utilizada para definir o que é processado dentro de um elemento ou pseudo-elemento*/
+	  display: table; /*A display property é utilizada para especificar a forma como um elemento é apresentado numa página Web*/
+	  clear: both; /*Clear define se um elemento deve ser movido para baixo (limpo) dos elementos flutuantes que o precedem.*/
+	}
+
+	/* Estilo do rodapé */
+	footer {
+		position: relative; /* Necessário para que o .loading se posicione relativamente a este */
+		background-color: #777; /*Define a cor*/
+		padding: 40px; /* Aumentado para caber bem o loader */
+		text-align: center; /*Alinhameto do texto*/
+		color: white; /*Cor do texto*/
+	}
+
+	/*Layout responsivo - faz com que as duas colunas/caixas sejam empilhadas uma sobre a outra em vez de uma ao lado da outra, em ecrãs pequenos*/
+	@media (max-width: 600px) { /*A regra @media é utilizada em consultas multimédia para aplicar estilos diferentes a diferentes tipos/dispositivos de media neste caso a largura maxima é de 600px*/
+	  nav, article {
+		width: 100%; /*Define que a largura do elemento deve ocupar 100% da largura disponivel*/
+		height: auto; /*Altura calculada automaticamente*/
+	  }
+	}
+	
+	.loading {
+		height: 50px;
+		width: 50px;
+		border: 6px solid aqua;
+		border-radius: 4px;
+		box-shadow: 0 0 8px aqua, 0 0 8px aqua inset;
+		position: absolute;
+		bottom: 10px; /* Opcional: afasta um pouco do fundo */
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		animation: 2s loading ease-in-out infinite;
+	}
+	
+	@keyframes loading{
+		0%{
+			transform: rotateX(0) rotateY(0) rotateZ(0);
+		}
+		
+		33%{
+			transform: rotateX(180deg) rotateY(0) rotateZ(0);
+		}
+		
+		67%{
+			transform: rotateX(180deg) rotateY(180deg) rotateZ(0);
+		}
+	
+		100%{
+			transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg);
+		}
+	}
+	</style>
+</head>
+<body bgcolor=Azure>
+	<ul class="menu">
+		<li><a href="Página 1.html">Introdução</a></li>
+		<li><a href="Página 2.html">Região Autónoma dos Açores</a></li>
+		<li><a href="Página 3.html">Região Autónoma da Madeira</a></li>
+		<li><a href="Página 4.html">Portugal Continental</a></li>
+		<li><a href="Página 5.html">Sobre nós</a></li>
+	</ul></br>
+
+
+	<header>
+		<h2>Portugal Continental</h2>
+	</header>
+
+	<section>
+	  <nav>
+		<h4>Clique numa região para ir para a sua respetiva página.</h4>
+		<p>	Portugal Continental é a designação atribuída ao território continental português, situado na Península Ibérica. É uma das três NUTS 1 de Portugal. A designação é usada para diferenciar o território continental (o Continente) dos arquipélagos atlânticos dos Açores e da Madeira (as ilhas ou regiões autónomas).</br></br>
+			Compreende 278 dos 308 municípios, 89 015 km² dos 92 145 km² do território nacional (96,6%), e 9 857 593 dos 10 344 802 habitantes que nele habitam (95,3%).</br></br>
+			Situado no extremo sudoeste europeu, Portugal Continental faz fronteira apenas com um outro país, Espanha a Este e a Norte, a Oeste e a Sul é limitado pelo Atlântico. O território é dividido no continente pelo rio principal, o Tejo. A norte, a paisagem é montanhosa nas zonas do interior com planaltos, intercalados por áreas que permitem o desenvolvimento da agricultura. A sul, até ao Algarve, o relevo é caraterizado por planícies, sendo as serras esporádicas.</br></br>
+			Como já foi referido portugal continental é dividido em sete regiões nacionais: Norte, Centro, Oeste e Vale do Tejo, Grande Lisboa, Península de Setúbal, Alentejo, Algarve.</br></br>
+		</p>
+	  </nav>
+	  
+	<article>
+	  <!-- Imagem com mapa, centrada com CSS -->
+	  <div style="text-align: center;">
+		<img src="500px-NUTS_PT_2024.png" usemap="#workmap" alt="Mapa interativo de Portugal">
+	  </div>
+
+	  <!-- Mapa de regiões com links e alertas -->
+	  <map name="workmap">
+		<area shape="poly" coords="282,10,287,52,311,39,379,31,437,32,445,65,475,80,415,150,363,152,344,172,314,153,293,153,264,184,240,160,218,48"
+			href="Página 6.html" alt="Norte" onclick="return showMessage('Norte');">
+
+		<area shape="poly" coords="240,160,265,180,312,154,350,180,375,155,405,150,400,325,322,336,302,313,289,329,274,304,237,303,228,348,216,348,202,311"
+			href="Página 7.html" alt="Centro" onclick="return showMessage('Centro');">
+
+		<area shape="poly" coords="201,315,210,318,217,348,231,349,235,311,256,304,259,316,270,307,279,312,280,328,296,330,297,314,307,315,307,325,319,328,320,344,317,345,306,340,302,349,310,357,270,396,283,410,277,422,287,425,284,430,291,435,286,439,272,429,249,439,242,439,242,432,232,433,230,442,211,442,207,430,218,408,212,407,194,420,180,417,182,408,170,407,168,402,161,402,170,383,170,373,166,363,196,335"
+			href="Página 8.html" alt="Oeste e Vale do Tejo" onclick="return showMessage('Oeste e Vale do Tejo');">
+
+		<area shape="poly" coords="163,401,182,408,180,415,195,419,204,409,217,410,207,431,204,416,188,446,155,447"
+			href="Página 9.html" alt="Grande Lisboa" onclick="return showMessage('Grande Lisboa');">
+
+		<area shape="poly" coords="175,451,188,448,191,452,199,449,197,446,210,439,214,442,219,439,225,443,229,441,228,436,233,429,238,433,243,429,243,429,252,439,254,449,246,451,236,460,239,466,224,476,214,471,180,485,184,475,182,462"
+			href="Página 10.html" alt="Península de Setúbal" onclick="return showMessage('Península de Setúbal');">
+
+		<area shape="poly" coords="348,325,406,405,376,444,373,482,395,514,410,510,404,534,378,539,353,596,297,622,268,609,260,616,221,611,222,548,214,542,225,516,224,494,212,472,234,483,231,471,255,449,250,438,273,427,286,439,276,422,282,410,268,396,308,357,301,350,305,339,317,344" 
+			href="Página 11.html" alt="Alentejo" onclick="return showMessage('Alentejo');">
+			
+		<area shape="poly" coords="354,596,364,641,314,669,285,653,234,652,207,666,202,659,222,608,274,610,297,621" 
+			href="Página 12.html" alt="Algarve" onclick="return showMessage('Algarve');">
+
+		<area shape="rect" coords="44,566,121,642" 
+			href="Página 3.html" alt="Madeira" onclick="return showMessage('Madeira');">
+			
+		<area shape="rect" coords="26,67,171,169" 
+		href="Página 2.html" alt="Açores" onclick="return showMessage('Açores');">
+	  </map>
+
+	  <script>
+		function showMessage(regiao) {
+		  alert("A ser reencaminhado para a página de " + regiao + "!");
+		  return true; // permite que o link continue após o alerta
+		}
+	  </script>
+	</article>
+	
+	</section>
+
+	<footer>
+	  <div class="loading"></div>
+	</footer>
+
+</body>
+</html>

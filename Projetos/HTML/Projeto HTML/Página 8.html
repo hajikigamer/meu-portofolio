@@ -1,0 +1,317 @@
+<html>
+<head>
+  <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 -->
+  <title>Divisão de territórios de Portugal</title> <!-- Título da página no separador do navegador -->
+  <style>
+    /* Estilo geral do menu */
+    ul.menu {
+      list-style-type: none; /* Remove marcadores de lista */
+      margin: 0; /* Remove margens exteriores */
+      padding: 0.4rem; /* Espaçamento interno */
+      border-radius: 5px; /* Arredondamento dos cantos */
+      background-color: #333; /* Cor de fundo */
+      display: flex; /* Layout flexível em linha */
+      justify-content: center; /* Centraliza os itens */
+      position: fixed; /* Fixa no topo da janela */
+      top: 8px; /* Distância do topo */
+      left: 8px; /* Espaçamento esquerdo */
+      right: 8px; /* Espaçamento direito */
+      z-index: 999; /* Prioridade na sobreposição */
+    }
+
+    ul.menu li {
+      margin: 5 5 5 5; /* Espaçamento em torno dos itens */
+    }
+
+    ul.menu li a {
+      display: block; /* Exibe como bloco clicável */
+      color: white; /* Cor do texto */
+      text-align: center; /* Alinhamento centralizado */
+      padding: 14px 10px; /* Espaçamento interno */
+      text-decoration: none; /* Remove sublinhado */
+      border: 1px solid gray; /* Borda cinzenta */
+      border-radius: 5px; /* Cantos arredondados */
+    }
+
+    ul.menu li a:hover {
+      background-color: #111; /* Cor ao passar o cursor */
+    }
+
+    * {
+      box-sizing: border-box; /* Inclui padding e border no tamanho total */
+    }
+
+    body {
+      font-family: Verdana, Arial, Helvetica, sans-serif; /* Tipo de letra */
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #22ad00, #2cde00, #90ff74, #2cde00, #22ad00); /* Fundo com gradiente */
+      padding-top: 100px; /* Espaço para o menu fixo */
+    }
+
+    h1 {
+      font-size: 4vmin; /* Tamanho responsivo */
+      text-align: center; /* Centraliza o texto */
+      color: white; /* Cor branca */
+    }
+
+    p {
+      font-size: max(10pt, 2.5vmin); /* Tamanho responsivo */
+      line-height: 1.4; /* Espaçamento entre linhas */
+      color: #166e00; /* Cor verde escuro */
+      margin-bottom: 1.5rem; /* Espaço inferior */
+    }
+
+    .wrap {
+      display: flex;
+      flex-wrap: nowrap; /* Não permite quebra de linha */
+      justify-content: space-between; /* Espaça as colunas */
+      width: 85vmin;
+      height: 65vmin;
+      margin: 2rem auto;
+      border: 8px solid;
+      border-image: linear-gradient(-50deg, #bdffad, #32ff00, #2cde00, #004f18, #2cde00, #32ff00, #bdffad) 1;
+      transition: 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 1rem 0.75rem;
+      background: #166e00;
+      transition: 0.4s ease-in-out;
+      z-index: 1;
+    }
+
+    .overlay-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 15vmin;
+      height: 100%;
+      padding: 0.5rem 0 0 0.5rem;
+      border: 3px solid;
+      border-image: linear-gradient(to bottom, #22ad00 5%, #32ff00 35% 65%, #22ad00 95%) 0 0 0 100%;
+      transition: 0.3s ease-in-out 0.2s;
+      z-index: 1;
+    }
+
+    .image-content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60vmin;
+      height: 100%;
+      background-image: url("O (1).jpg");
+      background-size: cover;
+      transition: 0.3s ease-in-out;
+    }
+
+    .inset {
+      max-width: 50%;
+      margin: 0.25em 1em 1em 0;
+      border-radius: 0.25em;
+      float: left;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 1rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 55px;
+      height: 4vmin;
+      transition: 0.3s ease-in-out 0.3s;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      background: yellow;
+      border: 1px solid indigo;
+      border-radius: 50%;
+      transition: 0.3s ease-in-out 0.3s;
+    }
+
+    .text {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60vmin;
+      height: 100%;
+      padding: 3vmin 4vmin;
+      background: #fff;
+      box-shadow: inset 1px 1px 15px 0 rgba(0 0 0 / 0.4);
+      overflow-y: scroll;
+    }
+
+    /* Efeitos de hover para animação */
+    .wrap:hover .overlay {
+      transform: translateX(-60vmin);
+    }
+
+    .wrap:hover .image-content {
+      width: 30vmin;
+    }
+
+    .wrap:hover .overlay-content {
+      border: none;
+      transition-delay: 0.2s;
+      transform: translateX(60vmin);
+    }
+
+    .wrap:hover .dots {
+      transform: translateX(1rem);
+    }
+
+    .wrap:hover .dots .dot {
+      background: white;
+    }
+
+    /* Animações */
+    .animate {
+      animation-duration: 0.7s;
+      animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+      animation-fill-mode: backwards;
+    }
+
+    .pop { animation-name: pop; }
+    .slide { animation-name: slide; }
+    .slide-left { animation-name: slide-left; }
+    .slide-up { animation-name: slide-up; }
+
+    @keyframes pop {
+      0% { opacity: 0; transform: scale(0.5, 0.5); }
+      100% { opacity: 1; transform: scale(1, 1); }
+    }
+
+    @keyframes slide {
+      0% { opacity: 0; transform: translate(4em, 0); }
+      100% { opacity: 1; transform: translate(0, 0); }
+    }
+
+    @keyframes slide-left {
+      0% { opacity: 0; transform: translate(-40px, 0); }
+      100% { opacity: 1; transform: translate(0, 0); }
+    }
+
+    @keyframes slide-up {
+      0% { opacity: 0; transform: translateY(3em); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .delay-1 { animation-delay: 0.3s; }
+    .delay-2 { animation-delay: 0.6s; }
+    .delay-3 { animation-delay: 0.9s; }
+    .delay-4 { animation-delay: 1.2s; }
+    .delay-5 { animation-delay: 1.5s; }
+    .delay-6 { animation-delay: 1.8s; }
+    .delay-7 { animation-delay: 2.1s; }
+    .delay-8 { animation-delay: 2.4s; }
+	
+	/* Galeria de cartões com efeito de contorno e holográfico */
+	.list {
+	  width: min(1000px, 100%);
+	  margin: 0 auto;
+	  columns: 4 300px;
+	  column-gap: 1em;
+	}
+
+	.list img {
+	  display: block;
+	  width: 100%;
+	  margin-bottom: 1em;
+	  border-radius: 10px;
+	  position: relative;
+	  overflow: hidden;
+	  background: #111;
+
+	  /* Contorno no hover */
+	  --b: 6px;
+	  --g: 0px;
+	  --c: #4ECDC4;
+	  outline: var(--b) solid transparent;
+	  outline-offset: 0;
+	  cursor: pointer;
+	  transition: transform 0.5s ease, box-shadow 0.5s ease, outline 0.3s ease, outline-offset 0.3s ease;
+	}
+
+	.list img:hover {
+	  transform: scale(1.03);
+	  box-shadow: 0 0 20px rgba(0,255,255,0.5);
+	  outline: var(--b) solid var(--c);
+	  outline-offset: var(--g);
+	}
+
+	.list img::before {
+	  content: '';
+	  position: absolute;
+	  top: -50%;
+	  left: -50%;
+	  width: 200%;
+	  height: 200%;
+	  background: linear-gradient(
+		0deg,
+		transparent,
+		transparent 30%,
+		rgba(0,255,255,0.3)
+	  );
+	  transform: rotate(-45deg);
+	  transition: all 0.5s ease;
+	  opacity: 0;
+	  z-index: 1;
+	}
+
+	.list img:hover::before {
+	  opacity: 1;
+	  transform: rotate(-45deg) translateY(100%);
+	}
+	
+	
+  </style>
+</head>
+<body>
+  <!-- Menu de navegação fixo no topo -->
+  <ul class="menu">
+    <li><a href="Página 1.html">Introdução</a></li>
+    <li><a href="Página 2.html">Região Autónoma dos Açores</a></li>
+    <li><a href="Página 3.html">Região Autónoma da Madeira</a></li>
+    <li><a href="Página 4.html">Portugal Continental</a></li>
+    <li><a href="Página 5.html">Sobre nós</a></li>
+  </ul>
+
+  <!-- Bloco visual com animações sobre os Açores -->
+  <div class="wrap animate pop">
+    <div class="overlay">
+      <div class="overlay-content animate slide-left delay-2">
+        <h1 class="animate slide-left pop delay-4">Oeste e Vale do Tejo</h1>
+        <p class="animate slide-left pop delay-5" style="color: white; margin-bottom: 2.5rem;">
+           <em></em>
+        </p>
+      </div>
+      <div class="image-content animate slide delay-5"></div>
+      <div class="dots animate">
+        <div class="dot animate slide-up delay-6"></div>
+        <div class="dot animate slide-up delay-7"></div>
+        <div class="dot animate slide-up delay-8"></div>
+      </div>
+    </div>
+
+    <!-- Texto explicativo -->
+    <div class="text">
+      <p><img class="inset" src="O (2).jpg" alt="Imagem Açores" />O Oeste e Vale do Tejo é uma região de Portugal situada no centro-oeste do país. Tem uma área de 9 201 km2 e registou em 2023 uma população de 852 583 habitantes com uma densidade populacional de 93 habitantes por km2, sendo a quarta região mais populosa e extensa do país.</p>
+      <p>É uma das nove NUTS II portuguesas, constituída pelas seguintes três sub-regiões:</br></br>Lezíria do Tejo,</br>Médio Tejo e</br>Oeste</p>
+      <p>que se dividem em 36 municípios e em 250 freguesias. Limita a norte com o Centro, a este com o Alentejo, a sudeste com a Península de Setúbal, a sudoeste com a Grande Lisboa e a oeste com o Oceano Atlântico.</p>
+    </div>
+  </div>
+  
+</body>
+</html>
+
