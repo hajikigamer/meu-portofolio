@@ -145,6 +145,21 @@
                 <span class="error-message"></span>
             </div>
 
+            <!-- Adicionar campo telefone (opcional) -->
+            <div class="form-group">
+                <label for="phone">Telefone (opcional)</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone"
+                        placeholder="+351 912 345 678"
+                    >
+                    <span class="input-icon"></span>
+                </div>
+                <span class="error-message"></span>
+            </div>
+
             <!-- Assunto -->
             <div class="form-group">
                 <label for="subject">
@@ -218,6 +233,38 @@
         </div>
     </div>
 </section>
+
+<!-- Container de Toasts (adicionar antes de </body>) -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Adicionar DEPOIS da secção contact -->
+<section id="admin-messages" class="admin-messages" style="display: none;">
+    <div class="admin-header">
+        <h2>📨 Mensagens Recebidas</h2>
+        <div class="admin-actions">
+            <span class="message-count">
+                <strong id="total-messages">0</strong> mensagens
+            </span>
+            <button id="clear-messages" class="btn-danger">
+                🗑️ Limpar Todas
+            </button>
+        </div>
+    </div>
+    
+    <div id="messages-list" class="messages-list">
+        <!-- Mensagens serão inseridas aqui -->
+    </div>
+    
+    <div id="no-messages" class="no-messages">
+        <p>📭 Ainda não há mensagens</p>
+    </div>
+</section>
+
+<!-- Botão flutuante para abrir admin -->
+<button id="toggle-admin" class="toggle-admin" title="Ver Mensagens">
+    📨
+    <span class="badge" id="unread-badge" style="display: none;">0</span>
+</button>
 
     <!-- FOOTER -->
     <footer>
