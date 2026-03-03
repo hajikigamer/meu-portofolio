@@ -1,4 +1,4 @@
-// ===== FUNÇÕES FOCADAS =====
+ // ===== FUNÇÕES FOCADAS =====
 
 // 1. Obter ano atual
 function getCurrentYear() {
@@ -872,21 +872,12 @@ function showToast(type, title, message, duration = 3000) {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.innerHTML = `
-        
-${icons[type]}
-
-        
-
-            
-${title}
-
-            
-${message}
-
-        
-
-        ×
-    `;
+    <div class="toast-icon">${icons[type]}</div>
+    <div class="toast-content">
+        <strong>${title}</strong>
+        <p>${message}</p>
+    </div>
+    <span class="toast-close">×</span>`;
     
     // Adicionar ao container
     container.appendChild(toast);
@@ -916,84 +907,6 @@ function setupFormSubmit() {
     const submitBtn = document.getElementById('submit-btn');
     
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Validar form final
-        if (!validateForm()) {
-            showToast('error', 'Erro!', 'Por favor, corrige os erros no formulário');
-            return;
-        }
-        
-        // Desativar botão e mostrar loading
-        submitBtn.disabled = true;
-        submitBtn.classList.add('loading');
-        
-        // Simular envio (depois vamos guardar em localStorage)
-        try {
-            // Simular delay de rede
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Sucesso!
-            showToast(
-                'success',
-                'Mensagem Enviada!',
-                'Obrigado pelo contacto. Respondo em breve!'
-            );
-            
-            // Limpar formulário
-            form.reset();
-            
-            // Remover estados de validação
-            document.querySelectorAll('.form-group').forEach(group => {
-                group.classList.remove('valid', 'invalid');
-            });
-            
-            // Resetar contador
-            document.getElementById('char-count').textContent = '0';
-            
-        } catch (error) {
-            showToast(
-                'error',
-                'Erro ao Enviar',
-                'Ocorreu um erro. Tenta novamente.'
-            );
-        } finally {
-            // Reativar botão e remover loading
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('loading');
-        }
-    });
-}
-
-// ===== GUARDAR MENSAGENS =====
-
-function saveMessage(formData) {
-    // Obter mensagens existentes
-    const messages = JSON.parse(localStorage.getItem('contactMessages')) || [];
-    
-    // Criar nova mensagem
-    const message = {
-        id: Date.now(),
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message'),
-        date: new Date().toISOString(),
-        read: false
-    };
-    
-    // Adicionar ao array
-    messages.unshift(message); // unshift adiciona ao início
-    
-    // Guardar de volta
-    localStorage.setItem('contactMessages', JSON.stringify(messages));
-    
-    console.log('💾 Mensagem guardada:', message);
-    return message;
-}
-
-// Atualizar função de submit
-form.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -1027,6 +940,36 @@ form.addEventListener('submit', async (e) => {
         submitBtn.classList.remove('loading');
     }
 });
+
+}
+
+// ===== GUARDAR MENSAGENS =====
+
+function saveMessage(formData) {
+    // Obter mensagens existentes
+    const messages = JSON.parse(localStorage.getItem('contactMessages')) || [];
+   
+    // Criar nova mensagem
+    const message = {
+        id: Date.now(),
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message'),
+        date: new Date().toISOString(),
+        read: false
+    };
+   
+    // Adicionar ao array
+    messages.unshift(message); // unshift adiciona ao início
+   
+    // Guardar de volta
+    localStorage.setItem('contactMessages', JSON.stringify(messages));
+   
+    console.log('💾 Mensagem guardada:', message);
+    return message;
+}
+
 
 // ===== ADMIN VIEW =====
 
