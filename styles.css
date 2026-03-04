@@ -1241,7 +1241,7 @@ footer {
 
 .btn-delete {
     background: var(--danger);
-    color: white;
+    color: black;
 }
 
 .btn-delete:hover {
@@ -1257,7 +1257,7 @@ footer {
     height: 60px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
+    color: var(--primary);
     border: none;
     font-size: 1.8em;
     cursor: pointer;
@@ -1276,7 +1276,7 @@ footer {
     top: -5px;
     right: -5px;
     background: var(--danger);
-    color: white;
+    color: var(--primary);
     width: 24px;
     height: 24px;
     border-radius: 50%;

@@ -1002,38 +1002,39 @@ function loadMessages() {
     messagesList.style.display = 'flex';
     noMessages.style.display = 'none';
     
+
     // Renderizar mensagens
     messagesList.innerHTML = messages.map(msg => `
-        
-            
-                
-                    ${msg.name}
-                    ${msg.email}
-                
-                
-                    ${new Date(msg.date).toLocaleDateString('pt-PT')}
-                    ${new Date(msg.date).toLocaleTimeString('pt-PT')}
-                
-            
-            ${msg.subject}
-            ${msg.message}
-            
-                
-                    🗑️ Eliminar
-                
-            
-        
-    `).join('');
+    <div class="message-card">
+        <div class="message-header">
+        <div class="message-sender">
+            <h4>${msg.name}</h4>
+            <p>${msg.email}</p>
+            <p class="message-phone">${msg.phone}</p>
+        </div>
+        </div>
+        <div class="message-meta">
+            <div>${new Date(msg.date).toLocaleDateString('pt-PT')}</div>
+        </div>
+            <span class="message-subject">${msg.subject}</span>
+            <div class="message-body">${msg.message}</div>
+            <div class="message-actions">
+                <button class="btn-delete" data-id="${msg.id}">🗑️ Eliminar</button>
+            </div>
+    </div>`).join('');
+ 
+    // Liga os botões de eliminar (após inserir o HTML)
+    list.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', () => deleteMessage(parseInt(btn.dataset.id)));
+    });
 }
 
 function deleteMessage(id) {
     if (!confirm('Eliminar esta mensagem?')) return;
-    
     let messages = JSON.parse(localStorage.getItem('contactMessages')) || [];
-    messages = messages.filter(m => m.id !== id);
+    messages = messages.filter(m => m.id !== id); // Remove a mensagem com este id
     localStorage.setItem('contactMessages', JSON.stringify(messages));
-    
-    loadMessages();
+    loadMessages(); // Atualiza a lista visível
     showToast('success', 'Eliminada!', 'Mensagem removida com sucesso');
 }
 
