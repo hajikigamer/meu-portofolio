@@ -1022,9 +1022,9 @@ function loadMessages() {
                 <button class="btn-delete" data-id="${msg.id}">🗑️ Eliminar</button>
             </div>
     </div>`).join('');
- 
+
     // Liga os botões de eliminar (após inserir o HTML)
-    list.querySelectorAll('.btn-delete').forEach(btn => {
+    messagesList.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', () => deleteMessage(parseInt(btn.dataset.id)));
     });
 }
