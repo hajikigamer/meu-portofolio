@@ -1069,108 +1069,53 @@ function setupAdminToggle() {
 // Limpar todas
 document.getElementById('clear-messages')?.addEventListener('click', clearAllMessages);
 
-// ===== FETCH COM ASYNC/AWAIT (MODERNA - RECOMENDADA) =====
-
-async function buscarDados() {
-    try {
-        const response = await fetch('https://api.github.com/users/github');
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
-buscarDados();
-
-// ===== PRIMEIRO FETCH - TESTE =====
-
-async function testarFetch() {
-    console.log('🚀 Iniciando fetch...');
-    
-    try {
-        // 1. Fazer o pedido
-        const response = await fetch('https://api.github.com/users/1');
-        
-        // 2. Verificar se resposta é OK (status 200-299)
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        // 3. Parsear JSON
-        const data = await response.json();
-        
-        // 4. Usar os dados
-        console.log('✅ Dados recebidos:', data);
-        console.log('Nome:', data.name);
-        console.log('Email:', data.email);
-        console.log('Localização:', data.location);
-        
-        return data;
-        
-    } catch (error) {
-        console.error('❌ Erro ao buscar dados:', error);
-    }
-}
-
-// Testar no console
-testarFetch();
-
-// ===== MOSTRAR DADOS NO DOM =====
-
-async function buscarEMostrar() {
-    const resultDiv = document.getElementById('result');
-    const btn = document.getElementById('fetch-btn');
-    
-    // Loading state
-    btn.disabled = true;
-    btn.textContent = 'Carregando...';
-    resultDiv.innerHTML = '<p>⏳ A buscar dados...</p>';
-    
-    try {
-        const response = await fetch('https://api.github.com/users/1');
-        
-        if (!response.ok) {
-            throw new Error(`Erro HTTP! status: ${response.status}`);
-        }
-        
-        const user = await response.json();
-        
-        // Mostrar dados
-        resultDiv.innerHTML = `
-            <div class="user-card">
-                <h3>${user.name}</h3>
-                <p><strong>Email:</strong> ${user.email}</p>
-                <p><strong>Localização:</strong> ${user.location}</p>
-                <p><strong>Website:</strong> ${user.website}</p>
-            </div>
-        `;
-        
-    } catch (error) {
-        resultDiv.innerHTML = `
-            <div class="error">
-                <p>❌ Erro ao buscar dados</p>
-                <p>${error.message}</p>
-            </div>
-        `;
-    } finally {
-        // Sempre executado
-        btn.disabled = false;
-        btn.textContent = 'Buscar Dados';
-    }
-}
+// ===== API SETUP =====
 
 // Event listener
-document.getElementById('fetch-btn')?.addEventListener('click', buscarEMostrar);
+// Setup button event listeners
+const fetchBtn = document.getElementById('fetch-btn');
+if (fetchBtn) {
+    fetchBtn.addEventListener('click', async () => {
+        const resultDiv = document.getElementById('result');
+        fetchBtn.disabled = true;
+        fetchBtn.textContent = 'Carregando...';
+        resultDiv.innerHTML = '<p>⏳ A buscar dados...</p>';
+        
+        try {
+            const data = await fetchGitHubUserData();
+            resultDiv.innerHTML = `
+                <div class="user-card">
+                    <h3>${data.name || 'N/A'}</h3>
+                    <p><strong>Perfil:</strong> <a href="${data.html_url}" target="_blank">${data.login}</a></p>
+                </div>
+            `;
+        } catch (error) {
+            resultDiv.innerHTML = `<div class="error"><p>❌ Erro: ${error.message}</p></div>`;
+        } finally {
+            fetchBtn.disabled = false;
+            fetchBtn.textContent = 'Buscar Dados';
+        }
+    });
+}
 
 // ===== GITHUB API INTEGRATION =====
 
 const GITHUB_USERNAME = 'hajikigamer'; // ALTERAR PARA O TEU USERNAME!
+const GITHUB_TOKEN = 'ghp_your_token_here'; // Gera em: https://github.com/settings/tokens (apenas "public_repo")
 
 // Buscar dados do utilizador
 async function fetchGitHubUserData() {
     try {
-        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+        const headers = {
+            'Accept': 'application/vnd.github.v3+json'
+        };
+        
+        // Adicionar token se definido
+        if (GITHUB_TOKEN && GITHUB_TOKEN !== 'ghp_your_token_here') {
+            headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+        }
+        
+        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { headers });
         
         if (!response.ok) {
             throw new Error(`GitHub API error: ${response.status}`);
@@ -1202,8 +1147,18 @@ function updateGitHubStats(userData) {
 // Buscar repositórios do utilizador
 async function fetchGitHubRepos() {
     try {
+        const headers = {
+            'Accept': 'application/vnd.github.v3+json'
+        };
+        
+        // Adicionar token se definido (aumenta rate limit)
+        if (GITHUB_TOKEN && GITHUB_TOKEN !== 'ghp_your_token_here') {
+            headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+        }
+        
         const response = await fetch(
-            `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=stars&per_page=6`
+            `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=stars&per_page=6`,
+            { headers }
         );
         
         if (!response.ok) {
@@ -1241,37 +1196,32 @@ function renderRepos(repos) {
     const grid = document.getElementById('repos-grid');
     
     grid.innerHTML = repos.map(repo => `
-        
-
+        <div class="repo-card">
+            <div class="repo-header">
+                <div class="repo-info">
+                    <h4>📦 ${repo.name}</h4>
+                    <p class="repo-url"><a href="${repo.html_url}" target="_blank">${repo.html_url}</a></p>
+                </div>
+            </div>
             
-
-                
-📦
-
-                
-
-                    
-${repo.name}
-
-                
-
+            <div class="repo-meta">
+                <div>${new Date(repo.created_at).toLocaleDateString('pt-PT')}</div>
+            </div>
             
-
+            <div class="repo-description">
+                ${repo.description || 'Sem descrição disponível'}
+            </div>
             
-
-                ${repo.description || 'Sem descrição'}
+            <div class="repo-stats">
+                <span class="stat">⭐ ${repo.stargazers_count}</span>
+                <span class="stat">🔀 ${repo.forks_count}</span>
+                ${repo.language ? `<span class="stat">💻 ${repo.language}</span>` : ''}
+            </div>
             
-
-
-            
-
-                ⭐ ${repo.stargazers_count}
-                🔀 ${repo.forks_count}
-            
-
-            ${repo.language ? `${repo.language}` : ''}
-        
-
+            <div class="repo-actions">
+                <a href="${repo.html_url}" target="_blank" class="btn-view">🔗 Ver Repositório</a>
+            </div>
+        </div>
     `).join('');
 }
 
@@ -1294,7 +1244,7 @@ async function initGitHubStats() {
         console.log('✅ GitHub stats carregados!');
         
     } catch (error) {
-        console.error('❌ Erro ao carregar GitHub stats');
+        console.error('❌ Erro ao carregar GitHub stats:', error);
         // Mostrar erro na UI
         document.querySelectorAll('.stat-value').forEach(el => {
             el.textContent = '--';
@@ -1343,7 +1293,16 @@ async function fetchGitHubUserData() {
     
     // Se não tem cache, buscar da API
     try {
-        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+        const headers = {
+            'Accept': 'application/vnd.github.v3+json'
+        };
+        
+        // Adicionar token se definido (aumenta rate limit de 60 para 5000 requests/hora)
+        if (GITHUB_TOKEN && GITHUB_TOKEN !== 'ghp_your_token_here') {
+            headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+        }
+        
+        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { headers });
         
         if (!response.ok) {
             throw new Error(`GitHub API error: ${response.status}`);
@@ -1524,7 +1483,16 @@ async function fetchGitHubUserData() {
     if (cached) return cached;
     
     try {
-        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+        const headers = {
+            'Accept': 'application/vnd.github.v3+json'
+        };
+        
+        // Adicionar token se definido
+        if (GITHUB_TOKEN && GITHUB_TOKEN !== 'ghp_your_token_here') {
+            headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+        }
+        
+        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { headers });
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
@@ -1567,19 +1535,5 @@ async function fetchWithRetry(url, options = {}, maxRetries = 3) {
     }
 }
 
-// Usar em fetchs
-async function fetchGitHubUserData() {
-    // ... cache code ...
-    
-    try {
-        const response = await fetchWithRetry(
-            `https://api.github.com/users/${GITHUB_USERNAME}`
-        );
-        const data = await response.json();
-        // ... resto
-    } catch (error) {
-        handleAPIError(error, 'GitHub');
-        throw error;
-    }
-}
+
 
