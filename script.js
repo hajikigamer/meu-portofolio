@@ -1098,10 +1098,22 @@ if (fetchBtn) {
     });
 }
 
-// ===== GITHUB API INTEGRATION =====
+// ===== CONFIGURAÇÃO =====
 
-const GITHUB_USERNAME = 'hajikigamer'; // ALTERAR PARA O TEU USERNAME!
-const GITHUB_TOKEN = 'ghp_your_token_here'; // Gera em: https://github.com/settings/tokens (apenas "public_repo")
+// Tentar carregar configurações locais (não versionadas)
+let GITHUB_USERNAME = 'hajikigamer';
+let GITHUB_TOKEN = null;
+
+try {
+    // Se config.js existir, carrega as configurações
+    if (typeof CONFIG !== 'undefined') {
+        GITHUB_USERNAME = CONFIG.github.username;
+        GITHUB_TOKEN = CONFIG.github.token;
+        console.log('✅ Configurações carregadas do config.js');
+    }
+} catch (error) {
+    console.log('ℹ️ Usando configurações padrão (sem token)');
+}
 
 // Buscar dados do utilizador
 async function fetchGitHubUserData() {
